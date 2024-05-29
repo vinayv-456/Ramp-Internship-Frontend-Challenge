@@ -18,21 +18,22 @@ export function InputSelect<TItem>({
     left: 0,
   })
 
-  const ref = useRef();
- 
+  const ref = useRef(null)
+
   useEffect(() => {
     // detect and handle scroll on the ref
     const handleScroll = () => {
-      setDropdownPosition(getDropdownPosition(ref.current))    
-    };
+      if (ref?.current) {
+        setDropdownPosition(getDropdownPosition(ref?.current))
+      }
+    }
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll)
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
 
   const onChange = useCallback<InputSelectOnChange<TItem>>(
     (selectedItem) => {
@@ -136,7 +137,7 @@ export function InputSelect<TItem>({
 
 const getDropdownPosition: GetDropdownPositionFn = (target) => {
   if (target instanceof Element) {
-    const { top, left } = target.getBoundingClientRect()    
+    const { top, left } = target.getBoundingClientRect()
     return {
       top: top + 63,
       left,
